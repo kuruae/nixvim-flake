@@ -1,6 +1,6 @@
 { ... }:
 {
-  programs.nixvim.extraConfigLua = ''
+  extraConfigLua = ''
     -- ── OSC 52 clipboard ──────────────────────────────────────────────────
     vim.g.clipboard = {
       name  = "OSC 52",
@@ -67,6 +67,11 @@
         vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "#45475a" })
         vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#cdd6f4", bold = true })
         vim.api.nvim_set_hl(0, "LineNr",       { fg = "#45475a" })
+        vim.api.nvim_set_hl(0, "FlashLabel",       { bg = "#ff007c", fg = "#ffffff", bold = true })
+        vim.api.nvim_set_hl(0, "FlashMatch",       { bg = "#1e2030", fg = "#7dcfff" })
+        vim.api.nvim_set_hl(0, "FlashBackdrop",    { fg = "#545c7e" })
+        vim.api.nvim_set_hl(0, "FlashTreesitter",  { bg = "#ff007c", fg = "#ffffff", bold = true })
+        vim.api.nvim_set_hl(0, "FlashCursor",      { bg = "#ff007c", fg = "#ffffff" })
       end,
     })
 

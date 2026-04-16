@@ -7,30 +7,27 @@
     ./lua.nix
   ];
 
-  programs.nixvim = {
-    enable = true;
-    extraPackages = with pkgs; [
-      # Formatters
-      rustfmt
-      black
-      isort
-      clang-tools
-      stylua
-      nixfmt
+  extraPackages = with pkgs; [
+    # Formatters
+    rustfmt
+    black
+    isort
+    clang-tools
+    stylua
+    nixfmt
 
-      # Linters
-      clippy
-      ruff
-      cppcheck
+    # Linters
+    clippy
+    ruff
+    cppcheck
 
-      # Tools
-      ripgrep
-      fd
-      pokeget-rs
-    ];
+    # Tools
+    ripgrep
+    fd
+    pokeget-rs
+  ];
 
-    extraPlugins = with pkgs.vimPlugins; [
-      conform-nvim
-    ];
-  };
+  extraPlugins = with pkgs.vimPlugins; [
+    conform-nvim
+  ];
 }

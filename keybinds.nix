@@ -2,7 +2,7 @@
 {
 
   # ─── Keymaps ───────────────────────────────────────────────────────────────
-  programs.nixvim.keymaps = [
+  keymaps = [
     # Save / quit
     {
       mode = "n";
