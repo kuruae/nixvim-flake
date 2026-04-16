@@ -1,5 +1,5 @@
 {
-  description = "Modular Nixvim - Stable Manual Approach";
+  description = "Nixvim Configuration";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -28,28 +28,22 @@
       perSystem =
         { system, pkgs, ... }:
         let
-          # 1. Define the Nixvim helper for this specific system
           nixvim' = nixvim.legacyPackages.${system};
 
-          # 2. Wrap your config in the expected module format
           nixvimModule = {
             inherit pkgs;
-            module = import ./default.nix; # This points to your main config file
-            extraSpecialArgs = { inherit inputs; }; # Pass flake inputs to your config
+            module = import ./default.nix;
+            extraSpecialArgs = { inherit inputs; };
           };
 
-          # 3. Create the actual Neovim package
           nvim = nixvim'.makeNixvimWithModule nixvimModule;
         in
         {
-          # This is what 'nix run' and 'nix build' will use
           packages.default = nvim;
 
-          # This allows 'nix flake check' to verify your config
           checks.default = nixvim.lib.${system}.check.mkTestDerivationFromNixvimModule nixvimModule;
         };
 
-      # Export the module so you can use it in your NixOS/Home Manager config later
       flake.nixvimModules.default = import ./default.nix;
     };
 }
