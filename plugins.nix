@@ -177,9 +177,9 @@
             {
               section = "terminal";
               cmd = "${pkgs.writeShellScript "pokevim" (builtins.readFile ./pokevim.sh)} ; sleep infinity";
-              padding = 1;
+              padding = 4;
               indent = 1;
-              height = 14;
+              height = 16;
               align = "center";
               ttl = 1200;
             }
@@ -232,7 +232,7 @@
         # Best setting:
         # SSH -- OFF
         # Local -- ON
-        scroll.enabled = false;
+        scroll.enabled = true;
 
         terminal.enabled = false;
         zen.enabled = false;
