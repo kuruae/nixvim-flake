@@ -593,6 +593,7 @@
             update_n_lines = "gsn";
           };
         };
+        pairs = { };
         ai = { }; # mey, this isnt what you think
         icons = { };
         comment = { };
