@@ -322,7 +322,17 @@
       action.__raw = "function() require('flash').toggle() end";
       options.desc = "Toggle flash search";
     }
-
+    # global rg search
+    {
+      mode = "n";
+      key = "<leader>/";
+      action.__raw = ''
+        function()
+          Snacks.picker.grep_buffers() 
+        end
+      '';
+      options.desc = "Search in buffer";
+    }
     # Toggle bufferline
     {
       mode = "n";

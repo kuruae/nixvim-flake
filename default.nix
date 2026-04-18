@@ -21,6 +21,8 @@
     ruff
     cppcheck
 
+    xclip
+
     # Tools
     ripgrep
     fd

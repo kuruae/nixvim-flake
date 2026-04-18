@@ -102,32 +102,68 @@
       };
     };
 
-    # Completion
-    cmp = {
+    # ── Completion ─────────────────────────────────────────────────────────
+    blink-cmp = {
       enable = true;
       settings = {
-        sources = [
-          { name = "nvim_lsp"; }
-          { name = "luasnip"; }
-          { name = "buffer"; }
-          { name = "path"; }
-        ];
-        mapping = {
-          "<C-Space>" = "cmp.mapping.complete()";
-          "<C-e>" = "cmp.mapping.abort()";
-          "<CR>" = "cmp.mapping.confirm({ select = true })";
-          "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i','s'})";
-          "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i','s'})";
-          "<C-d>" = "cmp.mapping.scroll_docs(4)";
-          "<C-u>" = "cmp.mapping.scroll_docs(-4)";
+        keymap = {
+          preset = "default";
+          "<Tab>" = [
+            "accept"
+            "fallback"
+          ];
+          "<S-Tab>" = [
+            "select_next"
+            "fallback"
+          ];
+          "<CR>" = [
+            "accept"
+            "fallback"
+          ];
+          "<C-e>" = [
+            "cancel"
+            "fallback"
+          ];
+          "<C-Space>" = [
+            "show"
+            "fallback"
+          ];
+          "<C-d>" = [
+            "scroll_documentation_down"
+            "fallback"
+          ];
+          "<C-u>" = [
+            "scroll_documentation_up"
+            "fallback"
+          ];
         };
-        snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
+        appearance.nerd_font_variant = "mono";
+        completion = {
+          list = {
+            selection = {
+              preselect = true;
+              auto_insert = false;
+            };
+          };
+          documentation = {
+            auto_show = true;
+            auto_show_delay_ms = 150;
+          };
+          menu.draw.treesitter = [ "lsp" ];
+        };
+        sources.default = [
+          "lsp"
+          "path"
+          "snippets"
+          "buffer"
+        ];
+        snippets.preset = "luasnip";
       };
     };
 
     # Snippet engine (needed by cmp)
     luasnip.enable = true;
-    cmp_luasnip.enable = true;
+    # cmp_luasnip.enable = true;
 
     # ── Snacks ─────────────────────────────────────────────────────────────
     snacks = {
@@ -225,12 +261,42 @@
       enable = true;
       settings = {
         window.width = 30;
+        sources = [
+          "filesystem"
+          "buffers"
+          "git_status"
+          "document_symbols"
+        ];
+        add_blank_line_at_top = false;
+
         filesystem = {
-          filtered_items = {
-            visible = true; # show hidden but greyed out
-            hide_gitignored = false;
+          bind_to_cwd = false;
+          follow_current_file = {
+            enabled = true;
           };
-          follow_current_file.enabled = true;
+        };
+
+        default_component_configs = {
+          indent = {
+            with_expanders = true;
+            expander_collapsed = "󰅂";
+            expander_expanded = "󰅀";
+            expander_highlight = "NeoTreeExpander";
+          };
+
+          git_status = {
+            symbols = {
+              added = " ";
+              conflict = "󰩌 ";
+              deleted = "󱂥";
+              ignored = " ";
+              modified = " ";
+              renamed = "󰑕";
+              staged = "󰩍";
+              unstaged = "";
+              untracked = " ";
+            };
+          };
         };
       };
     };
@@ -238,13 +304,144 @@
     # ── Bufferline ──────────────────────────────────────────────────────────
     bufferline = {
       enable = true;
-      settings.options = {
-        separator_style = "thin";
-        show_buffer_close_icons = false;
-        show_close_icon = false;
+      settings = {
+        highlights =
+          let
+            commonBgColor = "#363a4f";
+            commonFgColor = "#1e2030";
+
+            commonSelectedAttrs = {
+              bg = commonBgColor;
+            };
+
+            # Define a set with common selected attributes
+            selectedAttrsSet = builtins.listToAttrs (
+              map
+                (name: {
+                  inherit name;
+                  value = commonSelectedAttrs;
+                })
+                [
+                  # "separator_selected" # Handled uniquely
+                  "buffer_selected"
+                  "tab_selected"
+                  "numbers_selected"
+                  "close_button_selected"
+                  "duplicate_selected"
+                  "modified_selected"
+                  "info_selected"
+                  "warning_selected"
+                  "error_selected"
+                  "hint_selected"
+                  "diagnostic_selected"
+                  "info_diagnostic_selected"
+                  "warning_diagnostic_selected"
+                  "error_diagnostic_selected"
+                  "hint_diagnostic_selected"
+                ]
+            );
+          in
+          # Merge the common selected attributes with the unique attributes
+          selectedAttrsSet
+          // {
+            fill = {
+              bg = commonFgColor;
+            };
+            separator = {
+              fg = commonFgColor;
+            };
+            separator_visible = {
+              fg = commonFgColor;
+            };
+            separator_selected = {
+              bg = commonBgColor;
+              fg = commonFgColor;
+            };
+          };
+
+        options = {
+          diagnostics = "nvim_lsp";
+          diagnostics_indicator = /* Lua */ ''
+            function(count, level, diagnostics_dict, context)
+              local s = ""
+              for e, n in pairs(diagnostics_dict) do
+                local sym = e == "error" and " "
+                  or (e == "warning" and " " or "" )
+                if(sym ~= "") then
+                  s = s .. " " .. n .. sym
+                end
+              end
+              return s
+            end
+          '';
+          # Will make sure all names in bufferline are unique
+          enforce_regular_tabs = false;
+
+          offsets = [
+            {
+              filetype = "neo-tree";
+              text = "Neo-tree";
+              highlight = "Directory";
+              text_align = "left";
+            }
+          ];
+
+          groups = {
+            options = {
+              toggle_hidden_on_enter = true;
+            };
+
+            items = [
+              {
+                name = "Tests";
+                highlight = {
+                  underline = true;
+                  fg = "#a6da95";
+                  sp = "#494d64";
+                };
+                priority = 2;
+                # icon = "";
+                matcher.__raw = ''
+                  function(buf)
+                    return buf.name:match('%test') or buf.name:match('%.spec')
+                  end
+                '';
+              }
+              {
+                name = "Docs";
+                highlight = {
+                  undercurl = true;
+                  fg = "#ffffff";
+                  sp = "#494d64";
+                };
+                auto_close = false;
+                matcher.__raw = ''
+                  function(buf)
+                    return buf.name:match('%.md') or buf.name:match('%.txt')
+                  end
+                '';
+              }
+            ];
+          };
+
+          left_trunc_marker = "";
+          max_name_length = 18;
+          max_prefix_length = 15;
+          modified_icon = "●";
+
+          always_show_bufferline = false;
+          persist_buffer_sort = true;
+          right_trunc_marker = "";
+          separator_style = "thick";
+          show_buffer_close_icons = true;
+          show_buffer_icons = true;
+          show_close_icon = true;
+          show_tab_indicators = true;
+          sort_by = "extension";
+          tab_size = 16;
+        };
       };
     };
-
     # ── Status line ────────────────────────────────────────────────────────
     lualine = {
       enable = true;
