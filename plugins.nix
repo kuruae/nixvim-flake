@@ -185,7 +185,7 @@
             }
             {
               section = "keys";
-              title = "Quick Links";
+              title = " ";
               items = [
                 {
                   key = "f";
