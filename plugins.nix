@@ -54,7 +54,13 @@
         pyright.enable = true;
 
         # C / C++
-        clangd.enable = true;
+        clangd = {
+          enable = true;
+          onAttach.function = ''
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
+          '';
+        };
 
         # Lua
         lua_ls = {
@@ -256,51 +262,6 @@
       };
     };
 
-    # ── File tree ──────────────────────────────────────────────────────────
-    neo-tree = {
-      enable = true;
-      settings = {
-        window.width = 30;
-        sources = [
-          "filesystem"
-          "buffers"
-          "git_status"
-          "document_symbols"
-        ];
-        add_blank_line_at_top = false;
-
-        filesystem = {
-          bind_to_cwd = false;
-          follow_current_file = {
-            enabled = true;
-          };
-        };
-
-        default_component_configs = {
-          indent = {
-            with_expanders = true;
-            expander_collapsed = "󰅂";
-            expander_expanded = "󰅀";
-            expander_highlight = "NeoTreeExpander";
-          };
-
-          git_status = {
-            symbols = {
-              added = " ";
-              conflict = "󰩌 ";
-              deleted = "󱂥";
-              ignored = " ";
-              modified = " ";
-              renamed = "󰑕";
-              staged = "󰩍";
-              unstaged = "";
-              untracked = " ";
-            };
-          };
-        };
-      };
-    };
-
     # ── Bufferline ──────────────────────────────────────────────────────────
     bufferline = {
       enable = true;
@@ -360,6 +321,7 @@
           };
 
         options = {
+          numbers = "ordinal";
           diagnostics = "nvim_lsp";
           diagnostics_indicator = /* Lua */ ''
             function(count, level, diagnostics_dict, context)
@@ -437,7 +399,7 @@
           show_buffer_icons = true;
           show_close_icon = true;
           show_tab_indicators = true;
-          sort_by = "extension";
+          sort_by = "id";
           tab_size = 16;
         };
       };
@@ -572,6 +534,29 @@
             highlight.backdrop = false;
           };
         };
+      };
+    };
+
+    # ── Oil ───────────────────────────────────────────────────────────────
+    oil = {
+      enable = true;
+      settings = {
+        use_default_keymaps = true;
+        view_options = {
+          show_hidden = true;
+          is_always_hidden_file.__raw = ''
+            function(name)
+              return name == ".." or name == ".git"
+            end
+          '';
+        };
+        float = {
+          padding = 2;
+          max_width = 80;
+          max_height = 20;
+          border = "rounded";
+        };
+        default_file_explorer = true;
       };
     };
 

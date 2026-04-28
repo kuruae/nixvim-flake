@@ -37,9 +37,22 @@
       },
     })
 
+    -- ── which-key labels ────────────────────────────────────────────────────
+    require("which-key").add({
+      { "<leader>f", group = "Search" },
+      { "<leader>g", group = "Git" },
+    })
+
     -- ── Diagnostic signs and display ────────────────────────────────────────
     vim.diagnostic.config({
-      virtual_text   = true,
+      virtual_text   = {
+        spacing = 4,
+        prefix = "●",
+        format = function(diag)
+          local msg = diag.message
+          return #msg > 60 and msg:sub(1, 57) .. "…" or msg
+        end,
+      },
       signs          = true,
       underline      = true,
       update_in_insert = false,

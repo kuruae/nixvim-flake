@@ -24,13 +24,13 @@
     }
     {
       mode = "n";
-      key = "<leader>qq";
+      key = "<leader>Q";
       action = "<cmd>qa<cr>";
       options.desc = "Quit all";
     }
     {
       mode = "n";
-      key = "<leader>wq";
+      key = "<leader>W";
       action = "<cmd>wq<cr>";
       options.desc = "Save & quit";
     }
@@ -89,9 +89,15 @@
     }
     {
       mode = "n";
-      key = "<leader>bd";
-      action = "<cmd>bd<cr>";
+      key = "<leader>b";
+      action = "<cmd>lua Snacks.bufdelete()<cr>";
       options.desc = "Delete buffer";
+    }
+    {
+      mode = "n";
+      key = "<leader>p";
+      action = "<cmd>BufferLinePick<cr>";
+      options.desc = "Pick buffer";
     }
 
     {
@@ -140,13 +146,13 @@
     {
       mode = "n";
       key = "<C-d>";
-      action = "<C-d>zz";
+      action = "<C-d>";
       options.desc = "Scroll down (centered)";
     }
     {
       mode = "n";
       key = "<C-u>";
-      action = "<C-u>zz";
+      action = "<C-u>";
       options.desc = "Scroll up (centered)";
     }
     {
@@ -166,8 +172,8 @@
     {
       mode = "n";
       key = "<leader>e";
-      action = "<cmd>Neotree toggle<cr>";
-      options.desc = "Toggle file tree";
+      action = "<cmd>Oil --float<cr>";
+      options.desc = "Toggle file tree (Oil)";
     }
 
     # Snacks picker
