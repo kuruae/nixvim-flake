@@ -18,7 +18,7 @@
     }
     {
       mode = "n";
-      key = "<leader>ww";
+      key = "<leader>WQ";
       action = "<cmd>wa<cr>";
       options.desc = "Save all";
     }
