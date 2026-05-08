@@ -41,8 +41,9 @@
         # Rust
         rust_analyzer = {
           enable = true;
-          installCargo = true;
-          installRustc = true;
+          package = null;
+          installCargo = false;
+          installRustc = false;
           settings = {
             cargo.allFeatures = true;
             checkOnSave.command = "clippy";
@@ -51,11 +52,15 @@
         };
 
         # Python
-        pyright.enable = true;
+        basedpyright = {
+          enable = true;
+          package = null;
+        };
 
         # C / C++
         clangd = {
           enable = true;
+          package = null;
           onAttach.function = ''
             client.server_capabilities.documentFormattingProvider = false
             client.server_capabilities.documentRangeFormattingProvider = false
@@ -224,11 +229,16 @@
           scope.enabled = false;
         };
 
-        # Notifications — replaces fidget, shows LSP progress + vim.notify
         notifier = {
           enabled = true;
-          timeout = 3000; # ms before auto-dismiss
+          timeout = 3000; # ms
           style = "compact";
+          filter.__raw = ''
+            function(notif)
+              if notif.title == "pyright" then return false end
+              return true
+            end
+          '';
         };
 
         words.enabled = true;
