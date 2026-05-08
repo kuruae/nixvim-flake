@@ -9,17 +9,8 @@
 
   extraPackages = with pkgs; [
     # Formatters
-    rustfmt
-    black
-    isort
-    clang-tools
     stylua
     nixfmt
-
-    # Linters
-    clippy
-    ruff
-    cppcheck
 
     xclip
 

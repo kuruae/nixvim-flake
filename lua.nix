@@ -43,6 +43,13 @@
       { "<leader>g", group = "Git" },
     })
 
+    local orig_progress = vim.lsp.handlers["$/progress"]
+    vim.lsp.handlers["$/progress"] = function(err, result, ctx)
+      local client = vim.lsp.get_client_by_id(ctx.client_id)
+      if client and client.name == "basedpyright" then return end
+      orig_progress(err, result, ctx)
+    end
+
     -- ── Diagnostic signs and display ────────────────────────────────────────
     vim.diagnostic.config({
       virtual_text   = {
