@@ -417,16 +417,90 @@
     # ── Status line ────────────────────────────────────────────────────────
     lualine = {
       enable = true;
-      settings.options = {
-        theme = "auto";
-        globalstatus = true;
-        componentSeparators = {
-          left = "|";
-          right = "|";
+      settings = {
+        options = {
+          theme = "auto";
+          globalstatus = true;
+          disabled_filetypes = {
+            statusline = [
+              "dashboard"
+              "snacks_dashboard"
+            ];
+          };
+          component_separators = {
+            left = "";
+            right = "";
+          };
+          section_separators = {
+            left = "";
+            right = "";
+          };
         };
-        sectionSeparators = {
-          left = "";
-          right = "";
+        sections = {
+          lualine_a = [
+            {
+              name = "mode";
+              fmt.__raw = "function(str) return str:sub(1,1) end";
+            }
+          ];
+          lualine_b = [
+            {
+              name = "branch";
+              icon = " ";
+            }
+            {
+              name = "diff";
+              symbols = {
+                added = " ";
+                modified = " ";
+                removed = " ";
+              };
+            }
+          ];
+          lualine_c = [
+            { name = "filename"; }
+            {
+              name = "diagnostics";
+              sources = [ "nvim_lsp" ];
+              symbols = {
+                error = " ";
+                warn = " ";
+                info = " ";
+                hint = "󰝶 ";
+              };
+            }
+            { name.__raw = ''function() return "%=" end''; } # center spacer
+            {
+              name.__raw = ''
+                function()
+                  local reg = vim.fn.reg_recording()
+                  if reg ~= "" then return "  @" .. reg end
+                  return ""
+                end
+              '';
+              color.__raw = ''{ fg = "#f38ba8", bold = true }'';
+            }
+          ];
+          lualine_x = [
+            {
+              name = "filetype";
+              icon_only = true;
+            }
+          ];
+          lualine_y = [
+            { name = "progress"; }
+          ];
+          lualine_z = [
+            { name = "location"; }
+          ];
+        };
+        inactive_sections = {
+          lualine_a = [ ];
+          lualine_b = [ ];
+          lualine_c = [ { name = "filename"; } ];
+          lualine_x = [ { name = "location"; } ];
+          lualine_y = [ ];
+          lualine_z = [ ];
         };
       };
     };

@@ -9,7 +9,7 @@
     tabstop = 2;
     expandtab = true;
     smartindent = true;
-    wrap = false;
+    wrap = true;
     ignorecase = true;
     smartcase = true;
     termguicolors = true;
