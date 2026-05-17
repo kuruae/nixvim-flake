@@ -268,142 +268,123 @@
       settings = {
         highlights =
           let
-            commonBgColor = "#363a4f";
-            commonFgColor = "#1e2030";
-
-            commonSelectedAttrs = {
-              bg = commonBgColor;
-            };
-
-            # Define a set with common selected attributes
-            selectedAttrsSet = builtins.listToAttrs (
-              map
-                (name: {
-                  inherit name;
-                  value = commonSelectedAttrs;
-                })
-                [
-                  # "separator_selected" # Handled uniquely
-                  "buffer_selected"
-                  "tab_selected"
-                  "numbers_selected"
-                  "close_button_selected"
-                  "duplicate_selected"
-                  "modified_selected"
-                  "info_selected"
-                  "warning_selected"
-                  "error_selected"
-                  "hint_selected"
-                  "diagnostic_selected"
-                  "info_diagnostic_selected"
-                  "warning_diagnostic_selected"
-                  "error_diagnostic_selected"
-                  "hint_diagnostic_selected"
-                ]
-            );
+            base = "#1e2030";
+            accent = "#89b4fa";
+            subtle = "#45475a";
+            text = "#cdd6f4";
           in
-          # Merge the common selected attributes with the unique attributes
-          selectedAttrsSet
-          // {
+          {
             fill = {
-              bg = commonFgColor;
+              bg = "NONE";
+            };
+            background = {
+              bg = "NONE";
+              fg = subtle;
+            };
+            buffer_selected = {
+              bg = "NONE";
+              fg = text;
+              bold = true;
+              underline = true;
+              sp = accent;
+            };
+            buffer_visible = {
+              bg = "NONE";
+              fg = subtle;
+            };
+            modified = {
+              bg = "NONE";
+              fg = subtle;
+            };
+            modified_selected = {
+              bg = "NONE";
+              fg = accent;
+              underline = true;
+              sp = accent;
+            };
+            modified_visible = {
+              bg = "NONE";
+              fg = subtle;
             };
             separator = {
-              fg = commonFgColor;
-            };
-            separator_visible = {
-              fg = commonFgColor;
+              bg = "NONE";
+              fg = base;
             };
             separator_selected = {
-              bg = commonBgColor;
-              fg = commonFgColor;
+              bg = "NONE";
+              fg = base;
+            };
+            separator_visible = {
+              bg = "NONE";
+              fg = base;
+            };
+            indicator_selected = {
+              fg = accent;
+              bg = "NONE";
+            };
+            tab_selected = {
+              bg = "NONE";
+              bold = true;
+            };
+            tab = {
+              bg = "NONE";
+              fg = subtle;
+            };
+            tab_separator = {
+              bg = "NONE";
+              fg = base;
+            };
+            offset_separator = {
+              bg = "NONE";
+              fg = base;
             };
           };
-
         options = {
-          numbers = "ordinal";
-          diagnostics = "nvim_lsp";
-          diagnostics_indicator = /* Lua */ ''
-            function(count, level, diagnostics_dict, context)
-              local s = ""
-              for e, n in pairs(diagnostics_dict) do
-                local sym = e == "error" and " "
-                  or (e == "warning" and " " or "" )
-                if(sym ~= "") then
-                  s = s .. " " .. n .. sym
-                end
-              end
-              return s
-            end
-          '';
-          # Will make sure all names in bufferline are unique
-          enforce_regular_tabs = false;
-
+          always_show_bufferline = false;
+          separator_style = "none";
+          indicator.style = "underline";
+          diagnostics = false;
+          show_close_icon = false;
+          show_buffer_close_icons = false;
+          show_tab_indicators = false;
+          persist_buffer_sort = true;
+          max_name_length = 18;
+          tab_size = 14;
+          modified_icon = "●";
+          left_trunc_marker = "";
+          right_trunc_marker = "";
+          numbers = "none";
+          sort_by = "id";
           offsets = [
             {
               filetype = "neo-tree";
-              text = "Neo-tree";
+              text = "Files";
               highlight = "Directory";
               text_align = "left";
             }
           ];
-
           groups = {
-            options = {
-              toggle_hidden_on_enter = true;
-            };
-
+            options.toggle_hidden_on_enter = true;
             items = [
               {
                 name = "Tests";
                 highlight = {
-                  underline = true;
                   fg = "#a6da95";
-                  sp = "#494d64";
                 };
-                priority = 2;
-                # icon = "";
+                priority = 1;
                 matcher.__raw = ''
                   function(buf)
-                    return buf.name:match('%test') or buf.name:match('%.spec')
-                  end
-                '';
-              }
-              {
-                name = "Docs";
-                highlight = {
-                  undercurl = true;
-                  fg = "#ffffff";
-                  sp = "#494d64";
-                };
-                auto_close = false;
-                matcher.__raw = ''
-                  function(buf)
-                    return buf.name:match('%.md') or buf.name:match('%.txt')
+                    return buf.name:match('%test')
+                      or buf.name:match('%.spec')
                   end
                 '';
               }
             ];
           };
-
-          left_trunc_marker = "";
-          max_name_length = 18;
-          max_prefix_length = 15;
-          modified_icon = "●";
-
-          always_show_bufferline = false;
-          persist_buffer_sort = true;
-          right_trunc_marker = "";
-          separator_style = "thick";
-          show_buffer_close_icons = true;
-          show_buffer_icons = true;
-          show_close_icon = true;
-          show_tab_indicators = true;
-          sort_by = "id";
-          tab_size = 16;
         };
       };
     };
+
     # ── Status line ────────────────────────────────────────────────────────
     lualine = {
       enable = true;
@@ -656,6 +637,7 @@
         ai = { }; # mey, this isnt what you think
         icons = { };
         comment = { };
+        bufremove = { };
       };
     };
 

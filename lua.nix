@@ -8,7 +8,11 @@
     vim.api.nvim_create_autocmd('TextYankPost', {
         desc = 'Highlight when yanking (copying) text',
         callback = function()
-          vim.highlight.on_yank()
+          vim.highlight.on_yank({
+          higroup = "IncSearch",
+          timeout = 150,
+          on_large_yank = false
+        })
         end,
       })
 

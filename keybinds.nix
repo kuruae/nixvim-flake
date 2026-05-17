@@ -90,7 +90,7 @@
     {
       mode = "n";
       key = "<leader>b";
-      action = "<cmd>lua Snacks.bufdelete()<cr>";
+      action.__raw = "function() Snacks.bufdelete() end";
       options.desc = "Delete buffer";
     }
     {
@@ -173,7 +173,17 @@
       mode = "n";
       key = "<leader>e";
       action = "<cmd>Oil --float<cr>";
-      options.desc = "Toggle file tree (Oil)";
+      options.desc = "Open Oil";
+    }
+    {
+      mode = "n";
+      key = "-";
+      action.__raw = ''
+        function()
+          require("oil").open(vim.fn.expand("%:p:h"))
+        end
+      '';
+      options.desc = "Open Oil in current file dir";
     }
 
     # Snacks picker
@@ -185,9 +195,9 @@
     }
     {
       mode = "n";
-      key = "<leader>fF";
+      key = "<leader>F";
       action = "<cmd>lua Snacks.picker.files({ cmd = 'fd', args = { '--hidden', '--no-ignore' } })<cr>";
-      options.desc = "Find files";
+      options.desc = "Find files (hidden)";
     }
     {
       mode = "n";
@@ -199,7 +209,7 @@
       mode = "n";
       key = "<leader>fg";
       action = "<cmd>lua Snacks.picker.grep({ cmd = 'fd', args = { '--hidden', '--no-ignore' } })<cr>";
-      options.desc = "Live grep";
+      options.desc = "Live grep (hidden)";
     }
     {
       mode = "n";
