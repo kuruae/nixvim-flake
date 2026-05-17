@@ -1,7 +1,5 @@
 { ... }:
 {
-
-  # ─── Basic options ─────────────────────────────────────────────────────────
   opts = {
     number = true;
     relativenumber = true;
@@ -21,16 +19,12 @@
     splitbelow = true;
     cursorline = true;
     undofile = true;
-
     ttimeoutlen = 10;
     synmaxcol = 240;
-
     fillchars = {
       eob = " ";
     };
   };
-
-  # ─── Colorscheme ───────────────────────────────────────────────────────────
 
   colorschemes = {
     catppuccin = {
@@ -94,7 +88,6 @@
     };
   };
 
-  # ─── Globals ───────────────────────────────────────────────────────────────
   globals = {
     mapleader = " ";
     maplocalleader = " ";

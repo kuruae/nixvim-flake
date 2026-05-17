@@ -9,8 +9,11 @@ you don't even need to clone this repo. assuming you have nix installed, you can
 
 ```bash
 nix run github:kuruae/nixvim-flake
+
+# Or for a permanant install:
+nix profile add github:kuruae/nixvim-flake
 ```
-*(note: this github repo is just a read-only mirror!)*
+*(note: the github repo is just a read-only mirror! the main source is on [codeberg](https://codeberg.org/kuru/nixvim-flake))*
 
 ## the "mini" branch
 

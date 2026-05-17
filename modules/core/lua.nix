@@ -1,31 +1,26 @@
 { ... }:
 {
   extraConfigLua = ''
-    -- ── Clipboard ─────────────────────────────────────────────────────────
     vim.opt.clipboard = "unnamedplus"
 
-    -- ── Yank highlights ───────────────────────────────────────────────────
-    vim.api.nvim_create_autocmd('TextYankPost', {
-        desc = 'Highlight when yanking (copying) text',
-        callback = function()
-          vim.highlight.on_yank({
+    vim.api.nvim_create_autocmd("TextYankPost", {
+      callback = function()
+        vim.highlight.on_yank({
           higroup = "IncSearch",
           timeout = 150,
           on_large_yank = false
         })
-        end,
-      })
-
-    -- ── Auto create dir ──────────────────────────────────────────────────
-    vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-      callback = function(event)
-      if event.match:match("^%w%w+:[\\/][\\/]") then return end
-      local file = vim.uv.fs_realpath(event.match) or event.match
-      vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
-    end,
+      end,
     })
 
-    -- ── Conform (format on save) ──────────────────────────────────────────
+    vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+      callback = function(event)
+        if event.match:match("^%w%w+:[\\/][\\/]") then return end
+        local file = vim.uv.fs_realpath(event.match) or event.match
+        vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
+      end,
+    })
+
     require("conform").setup({
       formatters_by_ft = {
         rust    = { "rustfmt" },
@@ -41,13 +36,11 @@
       },
     })
 
-    -- ── which-key labels ────────────────────────────────────────────────────
     require("which-key").add({
       { "<leader>f", group = "Search" },
       { "<leader>g", group = "Git" },
     })
 
-    -- ── Diagnostic signs and display ────────────────────────────────────────
     vim.diagnostic.config({
       virtual_text   = {
         spacing = 4,

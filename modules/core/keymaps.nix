@@ -1,9 +1,6 @@
 { ... }:
 {
-
-  # ─── Keymaps ───────────────────────────────────────────────────────────────
   keymaps = [
-    # Save / quit
     {
       mode = "n";
       key = "<leader>w";
@@ -34,8 +31,6 @@
       action = "<cmd>wq<cr>";
       options.desc = "Save & quit";
     }
-
-    # Window navigation (Ctrl+hjkl)
     {
       mode = "n";
       key = "<C-h>";
@@ -60,8 +55,6 @@
       action = "<C-w>l";
       options.desc = "Window right";
     }
-
-    # Spammable indenting
     {
       mode = "v";
       key = "<";
@@ -74,7 +67,6 @@
       action = ">gv";
       options.desc = "repeating >";
     }
-    # Buffer navigation
     {
       mode = "n";
       key = "<S-h>";
@@ -99,9 +91,7 @@
       action = "<cmd>BufferLinePick<cr>";
       options.desc = "Pick buffer";
     }
-
     {
-      # Move lines in visual mode (Alt+jk)
       mode = "v";
       key = "<A-j>";
       action = ":m '>+1<cr>gv=gv";
@@ -113,8 +103,6 @@
       action = ":m '<-2<cr>gv=gv";
       options.desc = "Move line up";
     }
-
-    # Clear search highlight
     {
       mode = "n";
       key = "<leader>h";
@@ -127,8 +115,6 @@
       action = "<cmd>nohlsearch<cr>";
       options.desc = "Clear highlight";
     }
-
-    # Escape
     {
       mode = "i";
       key = "jk";
@@ -141,8 +127,6 @@
       action = "<Esc>";
       options.desc = "Escape";
     }
-
-    # re-center while scrolling / searching
     {
       mode = "n";
       key = "<C-d>";
@@ -167,8 +151,6 @@
       action = "Nzzzv";
       options.desc = "Prev result (centered)";
     }
-
-    # File tree
     {
       mode = "n";
       key = "<leader>e";
@@ -185,8 +167,6 @@
       '';
       options.desc = "Open Oil in current file dir";
     }
-
-    # Snacks picker
     {
       mode = "n";
       key = "<leader>ff";
@@ -247,8 +227,6 @@
       action = "<cmd>lua Snacks.picker.command_history()<cr>";
       options.desc = "Command history";
     }
-
-    # LSP (also wired in plugins.lsp.keymaps below for buffer-local)
     {
       mode = "n";
       key = "<leader>ca";
@@ -267,8 +245,6 @@
       action = "<cmd>lua vim.lsp.buf.hover()<cr>";
       options.desc = "Hover docs";
     }
-
-    # Diagnostics
     {
       mode = "n";
       key = "[d";
@@ -281,8 +257,6 @@
       action = "<cmd>lua vim.diagnostic.goto_next()<cr>";
       options.desc = "Next diagnostic";
     }
-
-    # Gitsigns
     {
       mode = "n";
       key = "<leader>gp";
@@ -295,8 +269,6 @@
       action = "<cmd>Gitsigns blame_line<cr>";
       options.desc = "Blame line";
     }
-
-    # flash jump
     {
       mode = [
         "n"
@@ -338,18 +310,16 @@
       action.__raw = "function() require('flash').toggle() end";
       options.desc = "Toggle flash search";
     }
-    # global rg search
     {
       mode = "n";
       key = "<leader>/";
       action.__raw = ''
         function()
-          Snacks.picker.grep_buffers() 
+          Snacks.picker.grep_buffers()
         end
       '';
       options.desc = "Search in buffer";
     }
-    # Toggle bufferline
     {
       mode = "n";
       key = "<leader>tb";
