@@ -13,6 +13,61 @@
       end,
     })
 
+    local function lsp_root(patterns)
+      local found = vim.fs.find(patterns, { upward = true })
+      if #found > 0 then
+        return vim.fs.dirname(found[1])
+      end
+      local buf = vim.api.nvim_buf_get_name(0)
+      if buf == "" then
+        return vim.loop.cwd()
+      end
+      return vim.fs.dirname(buf)
+    end
+
+    local function lsp_start_if_available(opts)
+      if vim.fn.executable(opts.cmd[1]) ~= 1 then return end
+      local existing = vim.lsp.get_clients({ name = opts.name, bufnr = 0 })
+      if #existing > 0 then return end
+      local root = opts.root_dir or lsp_root(opts.root_patterns)
+      vim.lsp.start({
+        name = opts.name,
+        cmd = opts.cmd,
+        root_dir = root,
+      })
+    end
+
+    vim.api.nvim_create_autocmd("FileType", {
+      callback = function(args)
+        local ft = vim.bo[args.buf].filetype
+        if ft == "go" or ft == "gomod" then
+          lsp_start_if_available({
+            name = "gopls",
+            cmd = { "gopls" },
+            root_patterns = { "go.work", "go.mod", ".git" },
+          })
+        elseif ft == "zig" then
+          lsp_start_if_available({
+            name = "zls",
+            cmd = { "zls" },
+            root_patterns = { "build.zig", "build.zig.zon", ".git" },
+          })
+        elseif ft == "javascript" or ft == "javascriptreact" or ft == "typescript" or ft == "typescriptreact" then
+          lsp_start_if_available({
+            name = "tsserver",
+            cmd = { "typescript-language-server", "--stdio" },
+            root_patterns = { "package.json", "tsconfig.json", "jsconfig.json", ".git" },
+          })
+        elseif ft == "java" then
+          lsp_start_if_available({
+            name = "jdtls",
+            cmd = { "jdtls" },
+            root_patterns = { "gradlew", "mvnw", "pom.xml", "build.gradle", "build.gradle.kts", ".git" },
+          })
+        end
+      end,
+    })
+
     vim.api.nvim_create_autocmd({ "BufWritePre" }, {
       callback = function(event)
         if event.match:match("^%w%w+:[\\/][\\/]") then return end
