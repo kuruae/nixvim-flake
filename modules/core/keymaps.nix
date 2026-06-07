@@ -273,6 +273,12 @@
     }
     {
       mode = "n";
+      key = "dn";
+      action = "<cmd>Noice<cr>";
+      options.desc = "Open noice diagnostics";
+    }
+    {
+      mode = "n";
       key = "<leader>gp";
       action = "<cmd>Gitsigns preview_hunk<cr>";
       options.desc = "Preview hunk";

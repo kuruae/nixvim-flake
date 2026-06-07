@@ -108,6 +108,16 @@
       },
     })
 
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = { "fugitive", "fugitiveblame", "git" },
+      callback = function(ev)
+        local clients = vim.lsp.get_clients({ bufnr = ev.buf })
+        for _, client in ipairs(clients) do
+          vim.lsp.buf_detach_client(ev.buf, client.id)
+        end
+      end,
+    })
+
     vim.api.nvim_create_autocmd("CursorHold", {
       callback = function()
         vim.diagnostic.open_float(nil, {

@@ -1,4 +1,4 @@
 { ... }:
 {
-  plugins.vim-fugitive.enable = true;
+  plugins.fugitive.enable = true;
 }
