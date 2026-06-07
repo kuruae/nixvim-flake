@@ -3,6 +3,7 @@
   opts = {
     number = true;
     relativenumber = true;
+    winborder = "rounded";
     shiftwidth = 2;
     tabstop = 2;
     expandtab = true;

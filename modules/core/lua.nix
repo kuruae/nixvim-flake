@@ -97,14 +97,7 @@
     })
 
     vim.diagnostic.config({
-      virtual_text   = {
-        spacing = 4,
-        prefix = "●",
-        format = function(diag)
-          local msg = diag.message
-          return #msg > 60 and msg:sub(1, 57) .. "…" or msg
-        end,
-      },
+      virtual_text   = false,
       signs          = true,
       underline      = true,
       update_in_insert = false,
@@ -113,6 +106,17 @@
         border = "rounded",
         source = "always",
       },
+    })
+
+    vim.api.nvim_create_autocmd("CursorHold", {
+      callback = function()
+        vim.diagnostic.open_float(nil, {
+          focus = false,
+          scope = "line",
+          border = "rounded",
+          source = "always",
+        })
+      end,
     })
 
     vim.api.nvim_create_autocmd("ColorScheme", {

@@ -22,5 +22,6 @@
     ./modules/plugins/which-key.nix
     ./modules/plugins/qol.nix
     ./modules/plugins/conform.nix
+    ./modules/plugins/fugitive.nix
   ];
 }

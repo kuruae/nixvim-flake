@@ -10,8 +10,22 @@
     {
       mode = "n";
       key = "<leader>q";
-      action = "<cmd>q<cr>";
-      options.desc = "Quit";
+      action.__raw = ''
+        function()
+          local listed = 0
+          for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+            if vim.bo[buf].buflisted then
+              listed = listed + 1
+            end
+          end
+          if listed <= 1 then
+            vim.cmd("q")
+          else
+            MiniBufremove.delete(0)
+          end
+        end
+      '';
+      options.desc = "Close buffer or quit";
     }
     {
       mode = "n";
