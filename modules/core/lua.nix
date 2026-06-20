@@ -1,23 +1,6 @@
 { ... }:
 {
   extraConfigLua = ''
-    -- Hyprland Opacity Toggles
-    local hyprland_group = vim.api.nvim_create_augroup("HyprlandOpacity", { clear = true })
-
-    vim.api.nvim_create_autocmd("VimEnter", {
-        group = hyprland_group,
-        callback = function()
-            vim.fn.system("hyprctl setprop active opacity 1.0 override 1.0 override")
-        end,
-    })
-
-    vim.api.nvim_create_autocmd("VimLeave", {
-        group = hyprland_group,
-        callback = function()
-            vim.fn.system("hyprctl setprop active opacity 0.85 override 0.85 override")
-        end,
-    })
-
     vim.opt.clipboard = "unnamedplus"
 
     vim.api.nvim_create_autocmd("TextYankPost", {
@@ -126,7 +109,7 @@
     })
 
     vim.api.nvim_create_autocmd("FileType", {
-      pattern = { "fugitive", "fugitiveblame", "git" },
+      pattern = { "NeogitStatus", "NeogitCommitMessage", "git" },
       callback = function(ev)
         local clients = vim.lsp.get_clients({ bufnr = ev.buf })
         for _, client in ipairs(clients) do

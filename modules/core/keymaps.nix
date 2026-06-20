@@ -290,6 +290,12 @@
       options.desc = "Blame line";
     }
     {
+      mode = "n";
+      key = "<leader>gg";
+      action = "<cmd>Neogit<cr>";
+      options.desc = "Open Neogit";
+    }
+    {
       mode = [
         "n"
         "x"

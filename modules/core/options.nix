@@ -4,10 +4,11 @@
     number = true;
     relativenumber = true;
     winborder = "rounded";
-    shiftwidth = 2;
-    tabstop = 2;
+    shiftwidth = 4;
+    tabstop = 4;
     expandtab = true;
     smartindent = true;
+    swapfile = false;
     wrap = true;
     ignorecase = true;
     smartcase = true;
