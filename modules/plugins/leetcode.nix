@@ -4,7 +4,9 @@
     leetcode-nvim
   ];
 
-  plugins.leetcode = {
-    enable = true;
-  };
+  extraConfigLua = ''
+    require("leetcode").setup({
+      non_standalone = true,
+    })
+  '';
 }

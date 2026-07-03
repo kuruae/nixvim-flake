@@ -37,10 +37,18 @@
           };
 
           nvim = nixvim'.makeNixvimWithModule nixvimModule;
+          nvim-wrapped = pkgs.symlinkJoin {
+            name = "nvim-wrapped";
+            paths = [ nvim ];
+            nativeBuildInputs = [ pkgs.makeWrapper ];
+            postBuild = ''
+              wrapProgram $out/bin/nvim \
+                --unset XDG_DATA_DIRS
+            '';
+          };
         in
         {
-          packages.default = nvim;
-
+          packages.default = nvim-wrapped;
           checks.default = nixvim.lib.${system}.check.mkTestDerivationFromNixvimModule nixvimModule;
         };
 

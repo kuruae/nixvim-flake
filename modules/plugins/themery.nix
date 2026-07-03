@@ -1,99 +1,68 @@
 { pkgs, ... }:
 {
   extraPlugins = with pkgs.vimPlugins; [
+    themery-nvim
     kanagawa-nvim
-    rose-pine-nvim
+    rose-pine
+    oxocarbon-nvim
+    vague-nvim
   ];
 
-  plugins.themery = {
-    enable = true;
-    settings = {
-      livePreview = true;
-      themes = [
+  extraConfigLua = ''
+    require("themery").setup({
+      livePreview = true,
+      themes = {
         {
-          name = "Catppuccin Mocha";
-          colorscheme = "catppuccin";
-          before.__raw = ''
-            function()
-              vim.g.catppuccin_flavour = "mocha"
-            end
-          '';
-        }
+          name = "Catppuccin Mocha",
+          colorscheme = "catppuccin-mocha",
+        },
         {
-          name = "Catppuccin Latte";
-          colorscheme = "catppuccin";
-          before.__raw = ''
-            function()
-              vim.g.catppuccin_flavour = "latte"
-            end
-          '';
-        }
+          name = "Catppuccin Latte",
+          colorscheme = "catppuccin-latte",
+        },
         {
-          name = "Catppuccin Frappe";
-          colorscheme = "catppuccin";
-          before.__raw = ''
-            function()
-              vim.g.catppuccin_flavour = "frappe"
-            end
-          '';
-        }
+          name = "Catppuccin Frappe",
+          colorscheme = "catppuccin-frappe",
+        },
         {
-          name = "Catppuccin Macchiato";
-          colorscheme = "catppuccin";
-          before.__raw = ''
-            function()
-              vim.g.catppuccin_flavour = "macchiato"
-            end
-          '';
-        }
+          name = "Catppuccin Macchiato",
+          colorscheme = "catppuccin-macchiato",
+        },
         {
-          name = "Kanagawa";
-          colorscheme = "kanagawa";
-        }
+          name = "Kanagawa",
+          colorscheme = "kanagawa",
+        },
         {
-          name = "Kanagawa Lotus";
-          colorscheme = "kanagawa";
-          before.__raw = ''
-            function()
-              vim.g.kanagawa_background = "lotus"
-            end
-          '';
-        }
+          name = "Vague",
+          colorscheme = "vague",
+        },
         {
-          name = "Vague";
-          colorscheme = "vague";
-        }
+          name = "Rose Pine",
+          colorscheme = "rose-pine-main",
+        },
         {
-          name = "Kanso";
-          colorscheme = "kanso";
-        }
+          name = "Rose Pine Moon",
+          colorscheme = "rose-pine-moon",
+        },
         {
-          name = "Rose Pine";
-          colorscheme = "rose-pine";
-        }
+          name = "Rose Pine Dawn",
+          colorscheme = "rose-pine-dawn",
+        },
         {
-          name = "Rose Pine Moon";
-          colorscheme = "rose-pine";
-          before.__raw = ''
-            function()
-              vim.g.rose_pine_variant = "moon"
-            end
-          '';
-        }
+          name = "Oxocarbon",
+          colorscheme = "oxocarbon",
+          before = [[
+            vim.o.background = "dark"
+          ]],
+        },
         {
-          name = "Rose Pine Dawn";
-          colorscheme = "rose-pine";
-          before.__raw = ''
-            function()
-              vim.g.rose_pine_variant = "dawn"
-            end
-          '';
-        }
-        {
-          name = "Oxocarbon";
-          colorscheme = "oxocarbon";
-        }
-      ];
-    };
-  };
+          name = "Oxocarbon Light",
+          colorscheme = "oxocarbon",
+          before = [[
+            vim.o.background = "light"
+          ]],
+        },
+      },
+    })
+  '';
 }

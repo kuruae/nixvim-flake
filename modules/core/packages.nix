@@ -16,7 +16,5 @@
     pokeget-rs
   ];
 
-  extraPlugins = with pkgs.vimPlugins; [
-    conform-nvim
-  ];
+
 }

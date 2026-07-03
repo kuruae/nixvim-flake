@@ -1,5 +1,15 @@
 { ... }:
 {
+  extraConfigLuaPre = ''
+    local pp = vim.opt.packpath:get()
+    local rtp = vim.opt.runtimepath:get()
+    local pp2, rtp2 = {}, {}
+    for _, p in ipairs(pp) do if not p:match("%$") then table.insert(pp2, p) end end
+    for _, p in ipairs(rtp) do if not p:match("%$") then table.insert(rtp2, p) end end
+    vim.opt.packpath = pp2
+    vim.opt.runtimepath = rtp2
+  '';
+
   extraConfigLua = ''
     vim.opt.clipboard = "unnamedplus"
 
@@ -76,26 +86,6 @@
       end,
     })
 
-    require("conform").setup({
-      formatters_by_ft = {
-        rust    = { "rustfmt" },
-        python  = { "isort", "black" },
-        c       = { "clang_format" },
-        cpp     = { "clang_format" },
-        lua     = { "stylua" },
-        nix     = { "nixfmt" },
-      },
-      format_on_save = {
-        timeout_ms = 500,
-        lsp_fallback = true,
-      },
-    })
-
-    require("which-key").add({
-      { "<leader>f", group = "Search" },
-      { "<leader>g", group = "Git" },
-    })
-
     vim.diagnostic.config({
       virtual_text   = false,
       signs          = true,
@@ -134,7 +124,7 @@
       callback = function()
         vim.api.nvim_set_hl(0, "SnacksIndent",      { fg = "#313244" })
         vim.api.nvim_set_hl(0, "SnacksIndentScope", { fg = "#45475a" })
-        vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#cdd6f4", bold = true })
+        vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#fab387", bold = true })
         vim.api.nvim_set_hl(0, "LineNr",       { fg = "#45475a" })
         vim.api.nvim_set_hl(0, "FlashLabel",       { bg = "#ff007c", fg = "#ffffff", bold = true })
         vim.api.nvim_set_hl(0, "FlashMatch",       { bg = "#1e2030", fg = "#7dcfff" })

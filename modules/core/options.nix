@@ -36,14 +36,7 @@
           light = "mocha";
           dark = "mocha";
         };
-        custom_highlights = ''
-          function(highlights)
-            return {
-            CursorLineNr = { fg = highlights.peach, style = {} },
-            NavicText = { fg = highlights.text },
-            }
-          end
-        '';
+
         flavour = "mocha";
         no_bold = false;
         no_italic = false;
@@ -53,15 +46,12 @@
           cmp = true;
           notify = true;
           gitsigns = true;
-          neotree = true;
           which_key = true;
           illuminate = {
             enabled = true;
             lsp = true;
           };
           treesitter = true;
-          telescope.enabled = true;
-          indent_blankline.enabled = true;
           mini = {
             enabled = true;
             indentscope_color = "rosewater";

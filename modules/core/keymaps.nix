@@ -15,10 +15,6 @@
           local bufname = vim.api.nvim_buf_get_name(0)
           local filetype = vim.bo.filetype
 
-          if filetype == "oil" then
-            require("oil").close()
-            return
-          end
 
           local listed = 0
           for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -30,6 +26,10 @@
           if listed <= 1 then
             vim.cmd("q")
           else
+            if filetype == "oil" then
+              require("oil").close()
+              return
+            end
             MiniBufremove.delete(0)
           end
         end
