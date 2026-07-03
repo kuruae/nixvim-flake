@@ -12,12 +12,21 @@
       key = "<leader>q";
       action.__raw = ''
         function()
+          local bufname = vim.api.nvim_buf_get_name(0)
+          local filetype = vim.bo.filetype
+
+          if filetype == "oil" then
+            require("oil").close()
+            return
+          end
+
           local listed = 0
           for _, buf in ipairs(vim.api.nvim_list_bufs()) do
             if vim.bo[buf].buflisted then
               listed = listed + 1
             end
           end
+
           if listed <= 1 then
             vim.cmd("q")
           else
@@ -249,7 +258,7 @@
     }
     {
       mode = "n";
-      key = "<leader>rn";
+      key = "gn";
       action = "<cmd>lua vim.lsp.buf.rename()<cr>";
       options.desc = "Rename";
     }
@@ -345,6 +354,66 @@
         end
       '';
       options.desc = "Search in buffer";
+    }
+    {
+      mode = "n";
+      key = "<leader>1";
+      action = "<cmd>BufferLineGoToBuffer 1<cr>";
+      options.desc = "Go to buffer 1";
+    }
+    {
+      mode = "n";
+      key = "<leader>2";
+      action = "<cmd>BufferLineGoToBuffer 2<cr>";
+      options.desc = "Go to buffer 2";
+    }
+    {
+      mode = "n";
+      key = "<leader>3";
+      action = "<cmd>BufferLineGoToBuffer 3<cr>";
+      options.desc = "Go to buffer 3";
+    }
+    {
+      mode = "n";
+      key = "<leader>4";
+      action = "<cmd>BufferLineGoToBuffer 4<cr>";
+      options.desc = "Go to buffer 4";
+    }
+    {
+      mode = "n";
+      key = "<leader>5";
+      action = "<cmd>BufferLineGoToBuffer 5<cr>";
+      options.desc = "Go to buffer 5";
+    }
+    {
+      mode = "n";
+      key = "<leader>6";
+      action = "<cmd>BufferLineGoToBuffer 6<cr>";
+      options.desc = "Go to buffer 6";
+    }
+    {
+      mode = "n";
+      key = "<leader>7";
+      action = "<cmd>BufferLineGoToBuffer 7<cr>";
+      options.desc = "Go to buffer 7";
+    }
+    {
+      mode = "n";
+      key = "<leader>8";
+      action = "<cmd>BufferLineGoToBuffer 8<cr>";
+      options.desc = "Go to buffer 8";
+    }
+    {
+      mode = "n";
+      key = "<leader>9";
+      action = "<cmd>BufferLineGoToBuffer 9<cr>";
+      options.desc = "Go to buffer 9";
+    }
+    {
+      mode = "n";
+      key = "<leader>0";
+      action = "<cmd>BufferLineGoToBuffer 0<cr>";
+      options.desc = "Go to buffer 10";
     }
     {
       mode = "n";

@@ -23,5 +23,7 @@
     ./modules/plugins/qol.nix
     ./modules/plugins/conform.nix
     ./modules/plugins/neogit.nix
+    ./modules/plugins/themery.nix
+    ./modules/plugins/leetcode.nix
   ];
 }
