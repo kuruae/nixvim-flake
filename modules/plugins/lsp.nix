@@ -18,7 +18,7 @@
         enable = true;
         cmd = [
           "clangd"
-          "--extra-arg=-std=c++23"
+          "--tweaks=-std=c++26"
         ];
         onAttach.function = ''
           client.server_capabilities.documentFormattingProvider = false
