@@ -16,6 +16,10 @@
       pyright.enable = true;
       clangd = {
         enable = true;
+        cmd = [
+          "clangd"
+          "--extra-arg=-std=c++23"
+        ];
         onAttach.function = ''
           client.server_capabilities.documentFormattingProvider = false
           client.server_capabilities.documentRangeFormattingProvider = false

@@ -6,7 +6,6 @@
 
   extraConfigLua = ''
     require("leetcode").setup({
-      non_standalone = true,
     })
   '';
 }
