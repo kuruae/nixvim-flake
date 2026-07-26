@@ -25,7 +25,7 @@
         "aarch64-darwin"
       ];
 
-      perSystem =
+perSystem =
         { system, pkgs, ... }:
         let
           nixvim' = nixvim.legacyPackages.${system};
@@ -38,20 +38,18 @@
 
           nvim = nixvim'.makeNixvimWithModule nixvimModule;
           nvim-wrapped = pkgs.symlinkJoin {
-            name = "nvim-wrapped";
+            name = "nvim"; # Changed from "nvim-wrapped" to "nvim"
             paths = [ nvim ];
             nativeBuildInputs = [ pkgs.makeWrapper ];
             postBuild = ''
               wrapProgram $out/bin/nvim \
                 --unset XDG_DATA_DIRS
             '';
+            passthru.meta.mainProgram = "nvim"; # Tells nix run exactly which binary to launch
           };
         in
         {
           packages.default = nvim-wrapped;
           checks.default = nixvim.lib.${system}.check.mkTestDerivationFromNixvimModule nixvimModule;
         };
-
-      flake.nixvimModules.default = import ./default.nix;
-    };
 }
