@@ -21,7 +21,6 @@
           "--background-index"
           "--clang-tidy"
           "--header-insertion=never"
-          "--query-driver=/nix/store/*-clang-*/bin/clang*,/nix/store/*-gcc-*/bin/g**"
         ];
         onAttach.function = ''
           client.server_capabilities.documentFormattingProvider = false
